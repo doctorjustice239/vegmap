@@ -54,6 +54,28 @@ ui <- argonDashPage(
       ,spin_flower(),tags$div("Loading...")),color = "#172b4d"),
     autoWaiter(html =spin_loaders(39,color = "#172b4d"),fadeout = TRUE,color = "white" ),
     
+    tags$head(
+      tags$style(HTML("
+        .watermark {
+          position: fixed;
+        top: 0px;
+        transform: translateY(-100%);
+        transform: translateX(-5%);
+        opacity: 0.4; /* Transparency */
+        z-index: -1; 
+        pointer-events: none; /* Let clicks pass through */
+        white-space: nowrap;
+        }
+        .content {
+        padding-top: 30px; /* Adjust based on watermark height */
+      }
+      "))
+    ),
+    div(class = "watermark", img(src = "watermark9.jpg")),
+    
+    tags$br(),
+    tags$br(),
+
                    argonCard(width = 12,shadow = TRUE,status = 'default', background_color = 'default',
                              
                              argonCard(width = 12,shadow = TRUE,status = 'default', background_color = 'Light',
@@ -223,22 +245,27 @@ ui <- argonDashPage(
                              ))
                              
                              
-                   )
+                   ),
+    
+    tags$br(),
+    tags$br(),
+    tags$br(),
+    tags$br()
     
   )
   
 )
 
-ui <- secure_app(# customizations for login page
-  tags_top = tags$div(
-    h1("Welcome", style = "text-align:center; color:#2c3e50;"),
-  ),
+#ui <- secure_app(# customizations for login page
+  #tags_top = tags$div(
+    #h1("Welcome", style = "text-align:center; color:#2c3e50;"),
+  #),
   
-  theme = bs_theme(
-    version = 5,
-    bootswatch = "flatly",
-    base_font = font_google("Poppins")
-  ),ui)   
+  #theme = bs_theme(
+    #version = 5,
+    #bootswatch = "flatly",
+    #base_font = font_google("Poppins")
+  #),ui)   
 
 
 # ------------------------------------------------
@@ -248,14 +275,14 @@ ui <- secure_app(# customizations for login page
 server <- function(input, output, session) {
   
   # Load credentials list
-  conf <- config::get("credentials", file = "config.yml")
+  #conf <- config::get("credentials", file = "config.yml")
   # Convert list of lists -> data.frame
-  credentials <- do.call(rbind, lapply(conf, as.data.frame, stringsAsFactors = FALSE))
+  #credentials <- do.call(rbind, lapply(conf, as.data.frame, stringsAsFactors = FALSE))
   
   # check_credentials returns a function to authenticate users
-  res_auth <- secure_server(
-    check_credentials = check_credentials(credentials)
-  )
+  #res_auth <- secure_server(
+    #check_credentials = check_credentials(credentials)
+  #)
   #hide the loading page 
   waiter_hide()
   
